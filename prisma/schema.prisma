@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Station {
+  id        Int     @id
+  name      String
+  latitude  Decimal
+  longitude Decimal
+
+  observedDailyWeather ObservedDailyWeather[]
+  forecastDailyWeather ForecastDailyWeather[]
+
+  @@map("stations")
+}
+
+model ObservedDailyWeather {
+  id        String   @id @default(uuid())
+  date      DateTime
+  flow      Decimal
+  elevation Decimal
+  rain      Decimal
+
+  Station    Station? @relation(fields: [station_id], references: [id])
+  station_id Int?
+
+  @@map("observed_daily_weather")
+}
+
+model ForecastDailyWeather {
+  id        String   @id @default(uuid())
+  date      DateTime
+  flow      Decimal
+  elevation Decimal
+  rain      Decimal
+
+  Station   Station? @relation(fields: [station_id], references: [id])
+  station_id Int?
+
+  @@map("forecast_daily_weather")
+}
