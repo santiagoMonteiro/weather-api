@@ -26,11 +26,12 @@ model Station {
 }
 
 model ObservedDailyWeather {
-  id        String   @id @default(uuid())
-  date      DateTime
-  flow      Decimal
-  elevation Decimal
-  rain      Decimal
+  id          String   @id @default(uuid())
+  date        DateTime
+  flow        Decimal
+  elevation   Decimal
+  rain        Decimal
+  temperature Decimal
 
   Station    Station? @relation(fields: [station_id], references: [id])
   station_id Int?
@@ -43,9 +44,8 @@ model ForecastDailyWeather {
   date      DateTime
   flow      Decimal
   elevation Decimal
-  rain      Decimal
 
-  Station   Station? @relation(fields: [station_id], references: [id])
+  Station    Station? @relation(fields: [station_id], references: [id])
   station_id Int?
 
   @@map("forecast_daily_weather")
