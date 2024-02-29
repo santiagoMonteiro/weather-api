@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Station {
-  id        Int     @id
+  id        String  @id
   name      String
   latitude  Decimal
   longitude Decimal
@@ -33,8 +33,8 @@ model ObservedDailyWeather {
   rain        Decimal
   temperature Decimal
 
-  Station    Station? @relation(fields: [station_id], references: [id])
-  station_id Int?
+  Station    Station @relation(fields: [station_id], references: [id])
+  station_id String
 
   @@map("observed_daily_weather")
 }
@@ -45,8 +45,8 @@ model ForecastDailyWeather {
   flow      Decimal
   elevation Decimal
 
-  Station    Station? @relation(fields: [station_id], references: [id])
-  station_id Int?
+  Station    Station @relation(fields: [station_id], references: [id])
+  station_id String
 
   @@map("forecast_daily_weather")
 }
