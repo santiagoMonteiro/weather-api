@@ -5,7 +5,7 @@ DBPASS=
 DBNAME=
 DBSERVER=
 
-DATAFILE=../data/SIM_INERC_1073.txt 
+DATAFILE=../../data/SIM_INERC_1073.TXT
 
 TMPDIR=$(mktemp /tmp/sim2sql.XXXXXX)
 TMPDIR=out
