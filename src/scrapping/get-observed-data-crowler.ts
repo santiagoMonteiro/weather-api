@@ -8,7 +8,7 @@ function delay(time: number) {
 
 async function getObservedWeatherData() {
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     defaultViewport: null,
   })
 
@@ -47,7 +47,7 @@ async function getObservedWeatherData() {
 
     for (let i = 6; i < lines.length; i++) {
       const observedData = lines[i].querySelectorAll('td')
-      const dataArray = Array.from(observedData, (e) => e.textContent)
+      const dataArray = Array.from(observedData, (e) => e.textContent) as string[]
 
       const fullData = !dataArray.includes('')
 
@@ -57,7 +57,16 @@ async function getObservedWeatherData() {
     }
   })
 
-  console.log(data)
+  if (data) {
+    console.log({
+      data_hora: data[0],
+      chuva_horaria: data[1],
+      nivel_adotado: data[2],
+      vazao: data[3]
+    })
+  } else {
+    console.log("Erro de leitura")
+  }
 
   await browser.close()
 }
