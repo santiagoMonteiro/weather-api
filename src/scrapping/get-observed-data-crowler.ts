@@ -6,9 +6,9 @@ function delay(time: number) {
   })
 }
 
-async function getWeatherData() {
+async function getObservedWeatherData() {
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     defaultViewport: null,
   })
 
@@ -21,7 +21,7 @@ async function getWeatherData() {
     waitUntil: 'domcontentloaded',
   })
 
-  await delay(500)
+  await delay(2000)
 
   await page.goto(dataUrl, {
     waitUntil: 'domcontentloaded',
@@ -44,18 +44,22 @@ async function getWeatherData() {
   const data = await page.evaluate(() => {
     const dataTable = document.querySelector('#cphCorpo_gdDados') as Element
     const lines = dataTable.querySelectorAll('tr')
-    const observed = lines[6].querySelectorAll('td')
-    const array = Array.from(observed, e => e.textContent)
 
-    return array
+    for (let i = 6; i < lines.length; i++) {
+      const observedData = lines[i].querySelectorAll('td')
+      const dataArray = Array.from(observedData, (e) => e.textContent)
+
+      const fullData = !dataArray.includes('')
+
+      if (fullData) {
+        return dataArray
+      }
+    }
   })
 
-  data.forEach(e => {
-    console.log(e);
-  });
-  
-  // console.log(Array.from(data))
+  console.log(data)
+
   await browser.close()
 }
 
-getWeatherData()
+getObservedWeatherData()
