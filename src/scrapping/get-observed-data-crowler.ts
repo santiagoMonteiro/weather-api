@@ -8,7 +8,7 @@ function delay(time: number) {
 
 async function getObservedWeatherData() {
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     defaultViewport: null,
   })
 
