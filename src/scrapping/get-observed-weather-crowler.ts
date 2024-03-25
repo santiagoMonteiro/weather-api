@@ -8,7 +8,7 @@ function delay(time: number) {
 
 async function getObservedWeatherData() {
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     defaultViewport: null,
   })
 
@@ -24,7 +24,7 @@ async function getObservedWeatherData() {
   await delay(2000)
 
   await page.goto(dataUrl, {
-    waitUntil: 'domcontentloaded',
+    waitUntil: 'networkidle0',
   })
 
   const subBasinsSelectElement = 'select[name="ctl00$cphCorpo$ctl01$lstSub"]'
@@ -33,6 +33,8 @@ async function getObservedWeatherData() {
   await page.select(subBasinsSelectElement, subBasinsOptionValue)
 
   await delay(5000)
+
+  // document.querySelector("#cphCorpo_ctl01_lstSub")
 
   const stationSelectElement = 'select[name="ctl00$cphCorpo$ctl01$lstEstacoes"]'
   const stationOptionValue = '73063010'

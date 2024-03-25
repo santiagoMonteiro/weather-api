@@ -19,27 +19,37 @@ model Station {
   latitude  Decimal
   longitude Decimal
 
-  observedDailyWeather ObservedDailyWeather[]
-  forecastDailyWeather ForecastDailyWeather[]
+  observedDailyWeather ObservedWeather[]
+  observedTemperature  ObservedTemperature[]
+  forecastDailyWeather ForecastWeather[]
 
   @@map("stations")
 }
 
-model ObservedDailyWeather {
-  id          String   @id @default(uuid())
-  date        DateTime
-  flow        Decimal
-  elevation   Decimal
-  rain        Decimal 
-  temperature Decimal
+model ObservedWeather {
+  id        String   @id @default(uuid())
+  date      DateTime
+  flow      Decimal
+  elevation Decimal
+  rain      Decimal
 
   Station    Station @relation(fields: [station_id], references: [id])
   station_id String
 
-  @@map("observed_daily_weather")
+  @@map("observed_weather")
 }
 
-model ForecastDailyWeather {
+model ObservedTemperature {
+  id         String   @id @default(uuid())
+  date       DateTime
+  value      Decimal
+  Station    Station  @relation(fields: [station_id], references: [id])
+  station_id String
+
+  @@map("observed_temperature")
+}
+
+model ForecastWeather {
   id        String   @id @default(uuid())
   date      DateTime
   flow      Decimal
@@ -48,5 +58,14 @@ model ForecastDailyWeather {
   Station    Station @relation(fields: [station_id], references: [id])
   station_id String
 
-  @@map("forecast_daily_weather")
+  @@map("forecast_weather")
+}
+
+model ObservedClimatology {
+  id          String   @id @default(uuid())
+  date        DateTime
+  flow        Decimal
+  elevation   Decimal
+  rain        Decimal
+  temperature Decimal
 }
