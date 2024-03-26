@@ -6,5 +6,4 @@ async function getTemperature(stationCode: number) {
   return json
 }
 
-getTemperature(1301704).then((data) => console.log(data.dados.TEM_INS))
-// HUMAITÁ
+getTemperature(1301704).then((data) => console.log(data))

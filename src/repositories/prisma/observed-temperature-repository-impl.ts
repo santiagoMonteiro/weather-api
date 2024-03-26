@@ -2,7 +2,7 @@ import { Prisma } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
 import { ObservedTemperatureRepository } from '../observed-temperature-repository'
 
-export class PrismaObservedTemperatureRepository
+export class ObservedTemperatureRepositoryImpl
   implements ObservedTemperatureRepository
 {
   async create(data: Prisma.ObservedTemperatureCreateInput) {
