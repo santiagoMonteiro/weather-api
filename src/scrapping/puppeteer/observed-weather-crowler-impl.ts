@@ -22,7 +22,7 @@ export class ObservedWeatherCrowlerImpl implements ObservedWeatherCrowler {
 
   async launchBrowser() {
     this.browser = await puppeteer.launch({
-      headless: true,
+      headless: false,
       defaultViewport: null,
     })
 
