@@ -33,8 +33,8 @@ model ObservedWeather {
   elevation Decimal
   rain      Decimal
 
-  Station    Station @relation(fields: [station_id], references: [id])
-  station_id String
+  Station    Station @relation(fields: [stationId], references: [id])
+  stationId String
 
   @@map("observed_weather")
 }
@@ -43,8 +43,8 @@ model ObservedTemperature {
   id         String   @id @default(uuid())
   date       DateTime
   value      Decimal
-  Station    Station  @relation(fields: [station_id], references: [id])
-  station_id String
+  Station    Station  @relation(fields: [stationId], references: [id])
+  stationId String
 
   @@map("observed_temperature")
 }
@@ -55,8 +55,8 @@ model ForecastWeather {
   flow      Decimal
   elevation Decimal
 
-  Station    Station @relation(fields: [station_id], references: [id])
-  station_id String
+  Station    Station @relation(fields: [stationId], references: [id])
+  stationId String
 
   @@map("forecast_weather")
 }

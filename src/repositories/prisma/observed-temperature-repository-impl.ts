@@ -5,7 +5,7 @@ import { ObservedTemperatureRepository } from '../observed-temperature-repositor
 export class ObservedTemperatureRepositoryImpl
   implements ObservedTemperatureRepository
 {
-  async create(data: Prisma.ObservedTemperatureCreateInput) {
+  async create(data: Prisma.ObservedTemperatureUncheckedCreateInput) {
     const temperatureRegister = await prisma.observedTemperature.create({
       data,
     })
