@@ -7,12 +7,17 @@ type ObservedWeatherCrowlerData = {
   flow: string
 }
 
+type SelectPageElementsProps = {
+  subBasinsOptionValue: string
+  stationOptionValue: string
+}
+
 export interface ObservedWeatherCrowler {
   launchBrowser(): Promise<void>
   closeBrowser(): Promise<void>
   accessTheMainPageToSetCookie(): Promise<void>
   accessDataPage(): Promise<void>
-  selectPageElements(): Promise<void>
+  selectPageElements(props: SelectPageElementsProps): Promise<void>
   getWeatherData(): Promise<ObservedWeatherCrowlerData | undefined>
   delay(time: number): Promise<unknown>
 }

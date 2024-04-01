@@ -1,7 +1,8 @@
+import { Stations } from '@/@types/stations'
 import { ObservedTemperatureRepository } from '@/repositories/observed-temperature-repository'
 import { ObservedTemperatureRepositoryImpl } from '@/repositories/prisma/observed-temperature-repository-impl'
 
-type GetObservedTemperatureUseCaseRequest = {
+type RegisterObservedTemperatureUseCaseRequest = {
   geoCode: string
   stationId: string
 }
@@ -9,16 +10,22 @@ type GetObservedTemperatureUseCaseRequest = {
 type ObservedTemperatureProps = {
   dados: {
     TEM_INS: string
+    UMD_INS: string
+    CHUVA: string
+    VEN_VEL: string
+    TEM_SEN: string
+    DT_MEDICAO: string
+    HR_MEDICAO: string
   }
 }
 
-export class GetObservedTemperatureUseCase {
+export class RegisterObservedTemperatureUseCase {
   constructor(
     private observedTemperatureRepository: ObservedTemperatureRepository
   ) {}
 
-  async execute(stationParams: GetObservedTemperatureUseCaseRequest[]) {
-    const temperatures = stationParams.map(async (station) => {
+  async execute(stationParams: RegisterObservedTemperatureUseCaseRequest[]) {
+    for await (const station of stationParams) {
       const response = await fetch(
         `https://apiprevmet3.inmet.gov.br/estacao/proxima/${station.geoCode}`
       )
@@ -26,21 +33,17 @@ export class GetObservedTemperatureUseCase {
       const observedTemperatureData: ObservedTemperatureProps =
         await response.json()
 
-      const temperature = await this.observedTemperatureRepository.create({
+      await this.observedTemperatureRepository.create({
         date: new Date(), // adjust the real time
         value: observedTemperatureData.dados.TEM_INS,
         stationId: station.stationId,
       })
-
-      return temperature
-    })
-
-    return temperatures
+    }
   }
 }
 
-const useCase = new GetObservedTemperatureUseCase(
+const useCase = new RegisterObservedTemperatureUseCase(
   new ObservedTemperatureRepositoryImpl()
 )
 
-useCase.execute([{ geoCode: '1301704', stationId: '123' }])
+useCase.execute(Stations)
