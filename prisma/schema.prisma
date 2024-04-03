@@ -19,46 +19,46 @@ model Station {
   latitude  Decimal
   longitude Decimal
 
-  observedDailyWeather ObservedWeather[]
-  observedTemperature  ObservedTemperature[]
-  forecastDailyWeather ForecastWeather[]
+  observedHydrologicalData   ObservedHydrologicalData[]
+  observedMeteorologicalData ObservedMeteorologicalData[]
+  forecastHydrologicalData   ForecastHydrologicalData[]
 
   @@map("stations")
 }
 
-model ObservedWeather {
+model ObservedHydrologicalData {
   id        String   @id @default(uuid())
   date      DateTime
   flow      Decimal
   elevation Decimal
   rain      Decimal
 
-  Station    Station @relation(fields: [stationId], references: [id])
+  Station   Station @relation(fields: [stationId], references: [id])
   stationId String
 
-  @@map("observed_weather")
+  @@map("observed_hydrological_data")
 }
 
-model ObservedTemperature {
-  id         String   @id @default(uuid())
-  date       DateTime
-  value      Decimal
-  Station    Station  @relation(fields: [stationId], references: [id])
-  stationId String
+model ObservedMeteorologicalData {
+  id          String   @id @default(uuid())
+  date        DateTime
+  temperature Decimal
+  humidity    Int
+  Station     Station  @relation(fields: [stationId], references: [id])
+  stationId   String
 
-  @@map("observed_temperature")
+  @@map("observed_meteorological_data")
 }
 
-model ForecastWeather {
+model ForecastHydrologicalData {
   id        String   @id @default(uuid())
   date      DateTime
   flow      Decimal
   elevation Decimal
-
-  Station    Station @relation(fields: [stationId], references: [id])
+  Station   Station  @relation(fields: [stationId], references: [id])
   stationId String
 
-  @@map("forecast_weather")
+  @@map("forecast_hydrological_data")
 }
 
 model ObservedClimatology {
@@ -68,4 +68,6 @@ model ObservedClimatology {
   elevation   Decimal
   rain        Decimal
   temperature Decimal
+
+  @@map("observed_climatology")
 }
