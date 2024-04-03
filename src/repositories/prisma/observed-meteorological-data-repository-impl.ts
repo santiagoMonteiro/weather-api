@@ -6,10 +6,22 @@ export class ObservedMeteorologicalDataRepositoryImpl
   implements ObservedMeteorologicalDataRepository
 {
   async create(data: Prisma.ObservedMeteorologicalDataUncheckedCreateInput) {
-    const temperatureRegister = await prisma.observedMeteorologicalData.create({
-      data,
-    })
+    const observedMeteorologicalData =
+      await prisma.observedMeteorologicalData.create({
+        data,
+      })
 
-    return temperatureRegister
+    return observedMeteorologicalData
+  }
+
+  async getLast() {
+    const observedMeteorologicalData =
+      await prisma.observedMeteorologicalData.findFirst({
+        orderBy: {
+          date: 'desc',
+        },
+      })
+
+    return observedMeteorologicalData
   }
 }

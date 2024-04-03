@@ -4,4 +4,5 @@ export interface ObservedMeteorologicalDataRepository {
   create(
     data: Prisma.ObservedMeteorologicalDataUncheckedCreateInput
   ): Promise<ObservedMeteorologicalData>
+  getLast(): Promise<ObservedMeteorologicalData | null>
 }
