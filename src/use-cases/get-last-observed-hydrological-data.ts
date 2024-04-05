@@ -15,7 +15,7 @@ export class GetLastObservedHydrologicalDataUseCase {
     const lastObservedHydrologicalData = []
 
     for await (const station of stationParams) {
-      const observedData = this.observedHydrologicalDataRepository.getLast(
+      const observedData = await this.observedHydrologicalDataRepository.getLast(
         station.stationId
       )
 
