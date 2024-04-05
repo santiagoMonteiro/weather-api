@@ -1,6 +1,4 @@
-import { Stations } from '@/constants/stations'
 import { ObservedMeteorologicalDataRepository } from '@/repositories/observed-meteorological-data-repository'
-import { ObservedMeteorologicalDataRepositoryImpl } from '@/repositories/prisma/observed-meteorological-data-repository-impl'
 import { formatMeteorologicalDate } from '@/utils/format-meteorological-date'
 
 type RegisterObservedMeteorologicalDataUseCaseRequest = {
@@ -37,7 +35,7 @@ export class RegisterObservedMeteorologicalDataUseCase {
         date: observedMeteorologicalData.dados.DT_MEDICAO,
         time: observedMeteorologicalData.dados.HR_MEDICAO,
       })
-      
+
       await this.observedMeteorologicalDataRepository.create({
         date: new Date(formatedDateTime),
         temperature: parseFloat(observedMeteorologicalData.dados.TEM_INS),
@@ -47,9 +45,3 @@ export class RegisterObservedMeteorologicalDataUseCase {
     }
   }
 }
-
-const useCase = new RegisterObservedMeteorologicalDataUseCase(
-  new ObservedMeteorologicalDataRepositoryImpl()
-)
-
-useCase.execute(Stations)

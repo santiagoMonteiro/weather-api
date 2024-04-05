@@ -1,6 +1,4 @@
-import { Stations } from '@/constants/stations'
 import { ObservedHydrologicalDataRepository } from '@/repositories/observed-hydrological-data-repository'
-import { ObservedHydrologicalDataRepositoryImpl } from '@/repositories/prisma/observed-hydrological-data-repository-impl'
 
 type RegisterObservedHydrologicalDataUseCaseRequest = {
   stationId: string
@@ -30,7 +28,6 @@ export class RegisterObservedHydrologicalDataUseCase {
 
       const observedWeatherData: ObservedHydrologicalDataProps =
         await response.json()
-        
 
       if (observedWeatherData) {
         this.observedHydrologicalDataRepository.create({
@@ -44,9 +41,3 @@ export class RegisterObservedHydrologicalDataUseCase {
     }
   }
 }
-
-const useCase = new RegisterObservedHydrologicalDataUseCase(
-  new ObservedHydrologicalDataRepositoryImpl()
-)
-
-useCase.execute(Stations)

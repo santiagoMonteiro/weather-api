@@ -14,9 +14,12 @@ export class ObservedMeteorologicalDataRepositoryImpl
     return observedMeteorologicalData
   }
 
-  async getLast() {
+  async getLast(stationId: string) {
     const observedMeteorologicalData =
       await prisma.observedMeteorologicalData.findFirst({
+        where: {
+          stationId,
+        },
         orderBy: {
           date: 'desc',
         },

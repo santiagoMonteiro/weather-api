@@ -14,9 +14,12 @@ export class ObservedHydrologicalDataRepositoryImpl
     return observedHydrologicalData
   }
 
-  async getLast() {
+  async getLast(stationId: string) {
     const observedHydrologicalData =
       await prisma.observedHydrologicalData.findFirst({
+        where: {
+          id: stationId,
+        },
         orderBy: {
           date: 'desc',
         },
