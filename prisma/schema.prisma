@@ -18,10 +18,14 @@ model Station {
   name      String
   latitude  Decimal
   longitude Decimal
+  geocode   String
+  filecode  String
 
   observedHydrologicalData   ObservedHydrologicalData[]
   observedMeteorologicalData ObservedMeteorologicalData[]
   forecastHydrologicalData   ForecastHydrologicalData[]
+
+  observedElevationClimatology ObservedElevationClimatology?
 
   @@map("stations")
 }
@@ -31,21 +35,22 @@ model ObservedHydrologicalData {
   date      DateTime
   flow      Decimal
   elevation Decimal
-  rain      Decimal
 
-  Station   Station @relation(fields: [stationId], references: [id])
-  stationId String
+  Station    Station @relation(fields: [station_id], references: [id])
+  station_id String
 
   @@map("observed_hydrological_data")
 }
 
 model ObservedMeteorologicalData {
-  id          String   @id @default(uuid())
-  date        DateTime
-  temperature Decimal
-  humidity    Int
-  Station     Station  @relation(fields: [stationId], references: [id])
-  stationId   String
+  id               String   @id @default(uuid())
+  date             DateTime
+  temperature      Decimal
+  humidity         Int
+  accumulated_rain Decimal
+
+  Station    Station @relation(fields: [station_id], references: [id])
+  station_id String
 
   @@map("observed_meteorological_data")
 }
@@ -55,17 +60,25 @@ model ForecastHydrologicalData {
   date      DateTime
   flow      Decimal
   elevation Decimal
-  Station   Station  @relation(fields: [stationId], references: [id])
-  stationId String
+
+  Station    Station @relation(fields: [station_id], references: [id])
+  station_id String
 
   @@map("forecast_hydrological_data")
 }
 
-model ObservedClimatology {
-  id          String   @id @default(uuid())
-  date        DateTime
-  flow        Decimal
-  elevation   Decimal
+model ObservedElevationClimatology {
+  id                            String   @id @default(uuid())
+  date                          DateTime
+  percentile_between_5_and_0    Decimal
+  percentile_between_10_and_5   Decimal
+  percentile_between_15_and_10  Decimal
+  percentile_between_85_and_90  Decimal
+  percentile_between_90_and_95  Decimal
+  percentile_between_95_and_100 Decimal
 
-  @@map("observed_climatology")
+  station    Station @relation(fields: [station_id], references: [id])
+  station_id String  @unique
+
+  @@map("observed_elevation_climatology")
 }
