@@ -1,4 +1,5 @@
 import { ObservedHydrologicalDataRepository } from '@/repositories/observed-hydrological-data-repository'
+import { StationRepository } from '@/repositories/station-repository'
 
 type RegisterObservedHydrologicalDataUseCaseRequest = {
   stationId: string
@@ -15,27 +16,25 @@ type ObservedHydrologicalDataProps = {
 
 export class RegisterObservedHydrologicalDataUseCase {
   constructor(
-    private observedHydrologicalDataRepository: ObservedHydrologicalDataRepository
+    private observedHydrologicalDataRepository: ObservedHydrologicalDataRepository,
+    private stationRepository: StationRepository
   ) {}
 
-  async execute(
-    stationParams: RegisterObservedHydrologicalDataUseCaseRequest[]
-  ) {
-    for await (const station of stationParams) {
-      const response = await fetch(
-        `https://ows.snirh.gov.br/ords/servicos/hidro/mapa/${station.stationId}`
-      )
+  async execute() {
+    const stations = await this.stationRepository.getAll()
 
-      const observedWeatherData: ObservedHydrologicalDataProps =
-        await response.json()
+    for await (const station of stations) {
+      const response = await fetch(`https://ows.snirh.gov.br/ords/servicos/hidro/mapa/${station.id}`)
+
+      const observedWeatherData: ObservedHydrologicalDataProps = await response.json()
 
       if (observedWeatherData) {
         this.observedHydrologicalDataRepository.create({
-          date: new Date(observedWeatherData.items[0].data_ult), // adjust to real time
+          date: new Date(observedWeatherData.items[0].data_ult),
           elevation: observedWeatherData.items[0].nivel_ult,
           flow: observedWeatherData.items[0].vazao_ult,
-          rain: observedWeatherData.items[0].chuva_ult,
-          stationId: station.stationId,
+          accumulated_rain: observedWeatherData.items[0].chuva_ult,
+          station_id: station.id,
         })
       }
     }

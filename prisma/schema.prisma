@@ -21,20 +21,20 @@ model Station {
   geocode   String
   filecode  String
 
+  observedElevationClimatology ObservedElevationClimatology?
   observedHydrologicalData   ObservedHydrologicalData[]
   observedMeteorologicalData ObservedMeteorologicalData[]
   forecastHydrologicalData   ForecastHydrologicalData[]
-
-  observedElevationClimatology ObservedElevationClimatology?
 
   @@map("stations")
 }
 
 model ObservedHydrologicalData {
-  id        String   @id @default(uuid())
-  date      DateTime
-  flow      Decimal
-  elevation Decimal
+  id               String   @id @default(uuid())
+  date             DateTime
+  flow             Decimal
+  elevation        Decimal
+  accumulated_rain Decimal
 
   Station    Station @relation(fields: [station_id], references: [id])
   station_id String
@@ -43,11 +43,10 @@ model ObservedHydrologicalData {
 }
 
 model ObservedMeteorologicalData {
-  id               String   @id @default(uuid())
-  date             DateTime
-  temperature      Decimal
-  humidity         Int
-  accumulated_rain Decimal
+  id          String   @id @default(uuid())
+  date        DateTime
+  temperature Decimal
+  humidity    Int
 
   Station    Station @relation(fields: [station_id], references: [id])
   station_id String

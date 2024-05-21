@@ -1,10 +1,6 @@
 import { ObservedMeteorologicalDataRepository } from '@/repositories/observed-meteorological-data-repository'
+import { StationRepository } from '@/repositories/station-repository'
 import { formatMeteorologicalDate } from '@/utils/format-meteorological-date'
-
-type RegisterObservedMeteorologicalDataUseCaseRequest = {
-  geoCode: string
-  stationId: string
-}
 
 type ObservedMeteorologicalDataProps = {
   dados: {
@@ -17,19 +13,17 @@ type ObservedMeteorologicalDataProps = {
 
 export class RegisterObservedMeteorologicalDataUseCase {
   constructor(
-    private observedMeteorologicalDataRepository: ObservedMeteorologicalDataRepository
+    private observedMeteorologicalDataRepository: ObservedMeteorologicalDataRepository,
+    private stationRepository: StationRepository
   ) {}
 
-  async execute(
-    stationParams: RegisterObservedMeteorologicalDataUseCaseRequest[]
-  ) {
-    for await (const station of stationParams) {
-      const response = await fetch(
-        `https://apiprevmet3.inmet.gov.br/estacao/proxima/${station.geoCode}`
-      )
+  async execute() {
+    const stations = await this.stationRepository.getAll()
 
-      const observedMeteorologicalData: ObservedMeteorologicalDataProps =
-        await response.json()
+    for await (const station of stations) {
+      const response = await fetch(`https://apiprevmet3.inmet.gov.br/estacao/proxima/${station.geocode}`)
+
+      const observedMeteorologicalData: ObservedMeteorologicalDataProps = await response.json()
 
       const formatedDateTime = formatMeteorologicalDate({
         date: observedMeteorologicalData.dados.DT_MEDICAO,
@@ -40,7 +34,7 @@ export class RegisterObservedMeteorologicalDataUseCase {
         date: new Date(formatedDateTime),
         temperature: parseFloat(observedMeteorologicalData.dados.TEM_INS),
         humidity: parseFloat(observedMeteorologicalData.dados.UMD_INS),
-        stationId: station.stationId,
+        station_id: station.id,
       })
     }
   }
