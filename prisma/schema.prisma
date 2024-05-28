@@ -18,8 +18,8 @@ model Station {
   name      String
   latitude  Decimal
   longitude Decimal
-  geocode   String
-  filecode  String
+  geoCode   String
+  fileCode  String
 
   observedElevationClimatology ObservedElevationClimatology?
   observedHydrologicalData   ObservedHydrologicalData[]

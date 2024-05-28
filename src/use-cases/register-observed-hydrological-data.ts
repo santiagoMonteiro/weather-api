@@ -1,10 +1,6 @@
 import { ObservedHydrologicalDataRepository } from '@/repositories/observed-hydrological-data-repository'
 import { StationRepository } from '@/repositories/station-repository'
 
-type RegisterObservedHydrologicalDataUseCaseRequest = {
-  stationId: string
-}
-
 type ObservedHydrologicalDataProps = {
   items: {
     data_ult: string
@@ -31,7 +27,7 @@ export class RegisterObservedHydrologicalDataUseCase {
       if (observedWeatherData) {
         this.observedHydrologicalDataRepository.create({
           date: new Date(observedWeatherData.items[0].data_ult),
-          elevation: observedWeatherData.items[0].nivel_ult,
+          elevation: observedWeatherData.items[0].nivel_ult / 100, // cm -> m
           flow: observedWeatherData.items[0].vazao_ult,
           accumulated_rain: observedWeatherData.items[0].chuva_ult,
           station_id: station.id,

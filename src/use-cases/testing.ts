@@ -5,6 +5,8 @@ import { ObservedMeteorologicalDataRepositoryImpl } from '@/repositories/prisma/
 import { GetLastObservedHydrologicalDataUseCase } from './get-last-observed-hydrological-data'
 import { GetLastObservedMeteorologicalDataUseCase } from './get-last-observed-meteorological-data'
 import { StationRepositoryImpl } from '@/repositories/prisma/station-repository-impl'
+import { RegisterForecastHydrologicalDataUseCase } from './register-forecast-hydrological-data'
+import { ForecastHydrologicalDataRepositoryImpl } from '@/repositories/prisma/forecast-hydrological-data-repository-impl'
 
 // const useCase1 = new RegisterObservedHydrologicalDataUseCase(
 //   new ObservedHydrologicalDataRepositoryImpl(),
@@ -15,12 +17,14 @@ import { StationRepositoryImpl } from '@/repositories/prisma/station-repository-
 
 // /* ------------------------------------------------------------- */
 
-const useCase2 = new RegisterObservedMeteorologicalDataUseCase(
-  new ObservedMeteorologicalDataRepositoryImpl(),
-  new StationRepositoryImpl()
-)
+// const useCase2 = new RegisterObservedMeteorologicalDataUseCase(
+//   new ObservedMeteorologicalDataRepositoryImpl(),
+//   new StationRepositoryImpl()
+// )
 
-useCase2.execute()
+// useCase2.execute()
+
+
 
 /* ------------------------------------------------------------- */
 
@@ -37,3 +41,10 @@ useCase2.execute()
 //   new ObservedMeteorologicalDataRepositoryImpl()
 // )
 // useCase4.execute(Stations).then(data => console.log(data))
+
+const useCase5 = new RegisterForecastHydrologicalDataUseCase(
+  new ForecastHydrologicalDataRepositoryImpl(),
+  new StationRepositoryImpl()
+)
+
+useCase5.execute()

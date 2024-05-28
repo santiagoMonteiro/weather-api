@@ -21,7 +21,7 @@ export class RegisterObservedMeteorologicalDataUseCase {
     const stations = await this.stationRepository.getAll()
 
     for await (const station of stations) {
-      const response = await fetch(`https://apiprevmet3.inmet.gov.br/estacao/proxima/${station.geocode}`)
+      const response = await fetch(`https://apiprevmet3.inmet.gov.br/estacao/proxima/${station.geoCode}`)
 
       const observedMeteorologicalData: ObservedMeteorologicalDataProps = await response.json()
 
