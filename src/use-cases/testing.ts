@@ -47,4 +47,4 @@ const useCase5 = new RegisterForecastHydrologicalDataUseCase(
   new StationRepositoryImpl()
 )
 
-useCase5.execute()
+useCase5.execute('2024-04-01')

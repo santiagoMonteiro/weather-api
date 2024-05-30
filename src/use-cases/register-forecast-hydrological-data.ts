@@ -21,7 +21,7 @@ export class RegisterForecastHydrologicalDataUseCase {
     private stationsRepository: StationRepository
   ) {}
 
-  async execute() {
+  async execute(initialRegisterDate: string) {
     const stations = await this.stationsRepository.getAll()
 
     await this.forecastHydrologicalDataRepository.clearAll()
@@ -29,12 +29,12 @@ export class RegisterForecastHydrologicalDataUseCase {
     for await (const station of stations) {
       const fileCode = station.fileCode
 
-      const elevationFilePath = `data/SIM_INERC_Hfl_${fileCode}.TXT`
-      const flowFilePath = `data/SIM_INERC_${fileCode}.TXT`
+      const elevationFilePath = `data/forecast/SIM_INERC_Hfl_${fileCode}.TXT`
+      const flowFilePath = `data/forecast/SIM_INERC_${fileCode}.TXT`
 
       const differenceInDays = getDifferenceInDaysBetweenDates({
         startDate: '2002-01-01',
-        endDate: '2024-04-01',
+        endDate: initialRegisterDate, // 'YYYY-MM-DD'
       })
 
       const forecastData = await getForecastDataByFile({

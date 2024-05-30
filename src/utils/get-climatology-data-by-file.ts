@@ -3,7 +3,7 @@ import readline from 'readline'
 
 type ClimatologyRegister = [number, number, number, number, number, number]
 
-function readLinesFromFile(filePath: string) {
+export function getClimatologyDataByFile(filePath: string): Promise<ClimatologyRegister[]> {
   return new Promise((resolve, reject) => {
     const outputArray: ClimatologyRegister[] = []
 
@@ -32,5 +32,3 @@ function readLinesFromFile(filePath: string) {
     })
   })
 }
-
-readLinesFromFile('data/climatology/15120001.txt').then(data => console.log(data))
