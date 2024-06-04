@@ -9,19 +9,9 @@ export class GetLastObservedHydrologicalDataUseCase {
     private observedHydrologicalDataRepository: ObservedHydrologicalDataRepository
   ) {}
 
-  async execute(
-    stationParams: GetLastObservedHydrologicalDataUseCaseRequest[]
-  ) {
-    const lastObservedHydrologicalData = []
+  async execute({ stationId }: GetLastObservedHydrologicalDataUseCaseRequest) {
+    const observedData = await this.observedHydrologicalDataRepository.getLast(stationId)
 
-    for await (const station of stationParams) {
-      const observedData = await this.observedHydrologicalDataRepository.getLast(
-        station.stationId
-      )
-
-      lastObservedHydrologicalData.push(observedData)
-    }
-
-    return lastObservedHydrologicalData
+    return observedData
   }
 }

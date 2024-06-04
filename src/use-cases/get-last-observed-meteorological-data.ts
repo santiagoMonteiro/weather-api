@@ -9,19 +9,9 @@ export class GetLastObservedMeteorologicalDataUseCase {
     private observedMeteorologicalDataRepository: ObservedMeteorologicalDataRepository
   ) {}
 
-  async execute(
-    stationParams: GetLastObservedMeteorologicalDataUseCaseRequest[]
-  ) {
-    const lastObservedMeteorologicalData = []
+  async execute({ stationId }: GetLastObservedMeteorologicalDataUseCaseRequest) {
+    const observedData = await this.observedMeteorologicalDataRepository.getLast(stationId)
 
-    for await (const station of stationParams) {
-      const observedData = await this.observedMeteorologicalDataRepository.getLast(
-        station.stationId
-      )
-
-      lastObservedMeteorologicalData.push(observedData)
-    }
-
-    return lastObservedMeteorologicalData
+    return observedData
   }
 }

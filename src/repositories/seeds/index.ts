@@ -15,7 +15,7 @@ async function createInitialData() {
 
     for await (const register of climatology) {
       dayCounter++
-      await prisma.observedElevationClimatology.create({
+      await prisma.elevationClimatology.create({
         data: {
           percentile_between_95_and_100: register[0],
           percentile_between_90_and_95: register[1],

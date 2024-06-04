@@ -15,13 +15,16 @@ import { StationRepository } from '@/repositories/station-repository'
 import { getDifferenceInDaysBetweenDates } from '@/utils/get-difference-between-dates'
 import { getForecastDataByFile } from '@/utils/get-forecast-data-by-file'
 
+type RegisterForecastHydrologicalDataUseCaseRequest = {
+  initialRegisterDate: string
+}
 export class RegisterForecastHydrologicalDataUseCase {
   constructor(
     private forecastHydrologicalDataRepository: ForecastHydrologicalDataRepository,
     private stationsRepository: StationRepository
   ) {}
 
-  async execute(initialRegisterDate: string) {
+  async execute({ initialRegisterDate }: RegisterForecastHydrologicalDataUseCaseRequest) {
     const stations = await this.stationsRepository.getAll()
 
     await this.forecastHydrologicalDataRepository.clearAll()

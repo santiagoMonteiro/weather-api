@@ -23,7 +23,7 @@ function readLinesFromFile(filePath: string, differenceInDays: number) {
           .filter((e) => e !== '')
           .map((m) => Number(m))
         const [day, month, year, value] = rawLine
-        const registerDate = new Date(year, month, day)
+        const registerDate = new Date(year, month - 1, day)
         const register: ForecastValue = [registerDate, value]
         outputArray.push(register)
       }

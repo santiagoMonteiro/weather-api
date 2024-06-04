@@ -21,7 +21,7 @@ model Station {
   geoCode   String
   fileCode  String
 
-  observedElevationClimatology ObservedElevationClimatology[]
+  observedElevationClimatology ElevationClimatology[]
   observedHydrologicalData     ObservedHydrologicalData[]
   observedMeteorologicalData   ObservedMeteorologicalData[]
   forecastHydrologicalData     ForecastHydrologicalData[]
@@ -63,10 +63,11 @@ model ForecastHydrologicalData {
   Station    Station @relation(fields: [station_id], references: [id])
   station_id String
 
+  @@index(date)
   @@map("forecast_hydrological_data")
 }
 
-model ObservedElevationClimatology {
+model ElevationClimatology {
   id                            String  @id @default(uuid())
   day                           Int
   percentile_between_5_and_0    Decimal
@@ -80,5 +81,5 @@ model ObservedElevationClimatology {
   station_id String
 
   @@index(day)
-  @@map("observed_elevation_climatology")
+  @@map("elevation_climatology")
 }
