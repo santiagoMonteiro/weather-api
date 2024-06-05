@@ -10,38 +10,39 @@ import { ForecastHydrologicalDataRepositoryImpl } from '@/repositories/prisma/fo
 import { GetForecastHydrologicalDataUseCase } from './get-forecast-hydrological-data'
 import { ElevationClimatologyRepositoryImpl } from '@/repositories/prisma/elevation-climatology-repository-impl'
 
-// const useCase1 = new RegisterObservedHydrologicalDataUseCase(
-//   new ObservedHydrologicalDataRepositoryImpl(),
-//   new StationRepositoryImpl()
-// )
+const useCase1 = new RegisterObservedHydrologicalDataUseCase(
+  new ObservedHydrologicalDataRepositoryImpl(),
+  new StationRepositoryImpl()
+)
 
-// useCase1.execute()
+useCase1.execute()
 
 // /* ------------------------------------------------------------- */
 
-// const useCase2 = new RegisterObservedMeteorologicalDataUseCase(
-//   new ObservedMeteorologicalDataRepositoryImpl(),
-//   new StationRepositoryImpl()
-// )
+const useCase2 = new RegisterObservedMeteorologicalDataUseCase(
+  new ObservedMeteorologicalDataRepositoryImpl(),
+  new StationRepositoryImpl()
+)
 
-// useCase2.execute()
+useCase2.execute()
 
 
 
 /* ------------------------------------------------------------- */
 
 // const useCase3 = new GetLastObservedHydrologicalDataUseCase(
-//   new ObservedHydrologicalDataRepositoryImpl()
+//   new ObservedHydrologicalDataRepositoryImpl(),
+//   new ElevationClimatologyRepositoryImpl()
 // )
 
-// useCase3.execute(Stations).then(data => console.log(data))
+// useCase3.execute({ stationId: '15630000' }).then(data => console.log(data))
 
 
 /* ------------------------------------------------------------- */
 
 // const useCase4 = new GetLastObservedMeteorologicalDataUseCase(
 //   new ObservedMeteorologicalDataRepositoryImpl()
-// ).execute()
+// ).execute({ stationId: '15630000' }).then(data => console.log(data))
 
 // const useCase5 = new RegisterForecastHydrologicalDataUseCase(
 //   new ForecastHydrologicalDataRepositoryImpl(),
@@ -50,7 +51,7 @@ import { ElevationClimatologyRepositoryImpl } from '@/repositories/prisma/elevat
 
 // useCase5.execute({ initialRegisterDate: '2024-05-01' })
 
-const useCase6 = new GetForecastHydrologicalDataUseCase(
-  new ForecastHydrologicalDataRepositoryImpl(),
-  new ElevationClimatologyRepositoryImpl()
-).execute({ stationId: '15630000' }).then(data => console.log(data))
+// const useCase6 = new GetForecastHydrologicalDataUseCase(
+//   new ForecastHydrologicalDataRepositoryImpl(),
+//   new ElevationClimatologyRepositoryImpl()
+// ).execute({ stationId: '15630000' }).then(data => console.log(data))

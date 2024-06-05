@@ -39,7 +39,7 @@ export class GetForecastHydrologicalDataUseCase {
 
       const climatologicalInterpretation = getClimatologicalInterpretation({
         climatologicalRegister: climatologicalRegister!,
-        forecastRegister
+        elevation: forecastRegister.elevation
       })
 
       elevationForecastWithInterpretation.push({

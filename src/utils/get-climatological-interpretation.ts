@@ -1,14 +1,14 @@
-import { ElevationClimatology, ForecastHydrologicalData } from '@prisma/client'
+import { ElevationClimatology } from '@prisma/client'
+import { Decimal } from '@prisma/client/runtime/library'
 
 type GetClimatologicalInterpretationProps = {
-  forecastRegister: ForecastHydrologicalData,
+  elevation: Decimal
   climatologicalRegister: ElevationClimatology
 }
 
 export function getClimatologicalInterpretation(
-  { forecastRegister, climatologicalRegister }: GetClimatologicalInterpretationProps
+  { elevation, climatologicalRegister }: GetClimatologicalInterpretationProps
 ) {
-  const elevation = forecastRegister.elevation
   let interpretation = ''
   
   if (elevation < climatologicalRegister!.percentile_between_95_and_100) {
