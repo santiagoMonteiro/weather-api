@@ -5,12 +5,15 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "start": "node build/server.js",
-    "build": "tsup src --out-dir build"
+    "build": "tsup src --out-dir build",
+    "seeds": "tsx src/repositories/seeds/index.ts",
+    "forecast": "tsx src/use-cases/makers/register-forecast-hydrological-data-maker.ts"
   },
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "5.12.1",
     "fastify": "4.26.1",
+    "node-cron": "3.0.3",
     "puppeteer": "22.3.0",
     "zod": "3.22.4"
   },

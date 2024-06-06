@@ -1,15 +1,3 @@
-// ALGORITHM - COMO REGISTRAR A PREVISÃO
-
-// somente manter na pasta os dados mais atuais
-// sempre que os arquivos novos forem gerados, os anteriores devem ser removidos
-
-// Parâmetros: Id da estação, Data inicial
-
-// - Acessar a pasta de arquivos
-// - Selecionar os dois arquivos por estação (cota e vazão)
-// - Remover todos os registros do Banco de Dados referentes à estação
-// - Buscar o registro da data inicial, e a partir dele registrar todos os seguintes para aquela estação
-
 import { ForecastHydrologicalDataRepository } from '@/repositories/forecast-hydrological-data-repository'
 import { StationRepository } from '@/repositories/station-repository'
 import { getDifferenceInDaysBetweenDates } from '@/utils/get-difference-between-dates'

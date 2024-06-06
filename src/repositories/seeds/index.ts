@@ -2,7 +2,9 @@ import { STATIONS } from '@/constants/stations'
 import { prisma } from '@/lib/prisma'
 import { getClimatologyDataByFile } from '@/utils/get-climatology-data-by-file'
 
-async function createInitialData() {
+export async function createInitialData() {
+  // await prisma.station.deleteMany()
+
   await prisma.station.createMany({
     data: STATIONS,
   })
