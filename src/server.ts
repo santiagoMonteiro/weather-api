@@ -1,7 +1,7 @@
 import { app } from './app'
 import { registerObservedDataFactory } from './use-cases/factories/register-observed-data-factory'
 
-setInterval(() => registerObservedDataFactory.execute(), 1 * 60 * 1000)
+setInterval(() => registerObservedDataFactory.execute(), 30 * 60 * 1000)
 
 app
   .listen({

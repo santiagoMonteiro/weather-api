@@ -15,4 +15,11 @@ export const STATIONS = [
     geoCode: '1100122',
     fileCode: '938',
   },
+  // {
+  //   id: '15120001',
+  //   name: 'Mato Grosso',
+  //   latitude: -15.0092,
+  //   longitude: -59.9581,
+  //   fileCode: '903'
+  // }
 ]
