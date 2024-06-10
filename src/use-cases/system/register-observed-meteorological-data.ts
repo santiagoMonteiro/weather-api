@@ -25,7 +25,7 @@ export class RegisterObservedMeteorologicalDataUseCase {
         const response = await fetch(`https://apiprevmet3.inmet.gov.br/estacao/proxima/${station.geoCode}`)
 
         const observedMeteorologicalData: ObservedMeteorologicalDataProps = await response.json()
-  
+
         const formatedDateTime = formatMeteorologicalDate({
           date: observedMeteorologicalData.dados.DT_MEDICAO,
           time: observedMeteorologicalData.dados.HR_MEDICAO,
@@ -39,9 +39,7 @@ export class RegisterObservedMeteorologicalDataUseCase {
         })
       } catch(e) {
         console.error("Error fetching data", e)
-        return null
       }
-      
     }
   }
 }
