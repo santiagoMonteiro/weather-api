@@ -7,7 +7,7 @@ type MeteorologicalDataRouteParams = {
 
 export async function meteorologicalDataRoutes(app: FastifyInstance) {
   app.get<{ Params: MeteorologicalDataRouteParams }>(
-    '/meteorological-data/observed/:stationId',
+    '/api/meteorological-data/observed/:stationId',
     observedMeteorologicalDataController
   )
 }

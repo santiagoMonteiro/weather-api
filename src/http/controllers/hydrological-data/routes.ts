@@ -8,11 +8,11 @@ type HydrologicalDataRouteParams = {
 
 export async function hydrologicalDataRoutes(app: FastifyInstance) {
   app.get<{ Params: HydrologicalDataRouteParams }>(
-    '/hydrological-data/forecast/:stationId',
+    '/api/hydrological-data/forecast/:stationId',
     forecastHydrologicalDataController
   )
   app.get<{ Params: HydrologicalDataRouteParams }>(
-    '/hydrological-data/observed/:stationId',
+    '/api/hydrological-data/observed/:stationId',
     observedHydrologicalDataController
   )
 }
