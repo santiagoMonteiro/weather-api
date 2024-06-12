@@ -27,8 +27,10 @@ export class GetLastObservedHydrologicalDataUseCase {
     })
 
     return {
-      observedHidrologicalData,
-      climatologicalInterpretation
+      observedHidrologicalData: {
+        ...observedHidrologicalData,
+        climatologicalInterpretation
+      },
     }
   }
 }
