@@ -25,6 +25,6 @@ export async function observedHydrologicalDataController(
     await getObservedHydrologicalDataUseCase.execute({ stationId })
 
   return reply.status(200).send({
-    observedHydrologicalData,
+    ...observedHydrologicalData,
   })
 }

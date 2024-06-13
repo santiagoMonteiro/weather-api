@@ -23,6 +23,6 @@ export async function observedMeteorologicalDataController(
     await getObservedMeteorologicalDataUseCase.execute({ stationId })
 
   return reply.status(200).send({
-    observedMeteorologicalData,
+    ...observedMeteorologicalData,
   })
 }

@@ -22,23 +22,33 @@ export class RegisterObservedMeteorologicalDataUseCase {
 
     for await (const station of stations) {
       try {
-        const response = await fetch(`https://apiprevmet3.inmet.gov.br/estacao/proxima/${station.geoCode}`)
+        const response = await fetch(
+          `https://apiprevmet3.inmet.gov.br/estacao/proxima/${station.geoCode}`
+        )
 
-        const observedMeteorologicalData: ObservedMeteorologicalDataProps = await response.json()
+        const observedMeteorologicalData: ObservedMeteorologicalDataProps =
+          await response.json()
 
-        const formatedDateTime = formatMeteorologicalDate({
-          date: observedMeteorologicalData.dados.DT_MEDICAO,
-          time: observedMeteorologicalData.dados.HR_MEDICAO,
-        })
-  
-        await this.observedMeteorologicalDataRepository.create({
-          date: new Date(formatedDateTime),
-          temperature: parseFloat(observedMeteorologicalData.dados.TEM_INS),
-          humidity: parseFloat(observedMeteorologicalData.dados.UMD_INS),
-          station_id: station.id,
-        })
-      } catch(e) {
-        console.error("Error fetching data", e)
+        if (observedMeteorologicalData.dados) {
+          const { TEM_INS, DT_MEDICAO, HR_MEDICAO, UMD_INS } =
+            observedMeteorologicalData.dados
+
+          if (TEM_INS && DT_MEDICAO && HR_MEDICAO && UMD_INS) {
+            const formatedDateTime = formatMeteorologicalDate({
+              date: observedMeteorologicalData.dados.DT_MEDICAO,
+              time: observedMeteorologicalData.dados.HR_MEDICAO,
+            })
+
+            await this.observedMeteorologicalDataRepository.create({
+              date: new Date(formatedDateTime),
+              temperature: parseFloat(observedMeteorologicalData.dados.TEM_INS),
+              humidity: parseFloat(observedMeteorologicalData.dados.UMD_INS),
+              station_id: station.id,
+            })
+          }
+        }
+      } catch (e) {
+        console.error('Error fetching data' + station.geoCode, e)
       }
     }
   }

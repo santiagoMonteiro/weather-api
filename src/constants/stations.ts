@@ -40,14 +40,6 @@ export const STATIONS: Station[] = [
     geoCode: '1100080',
     fileCode: '1031',
   },
-  // {
-  //   id: '15320002',
-  //   name: 'Abunã',
-  //   latitude: -9.7053,
-  //   longitude: -65.3667,
-  //   geoCode: '1100205',
-  //   fileCode: '1064'
-  // },
   {
     id: '15400000',
     name: 'Porto Velho',
