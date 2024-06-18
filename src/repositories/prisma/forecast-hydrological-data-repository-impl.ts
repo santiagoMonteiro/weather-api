@@ -5,15 +5,11 @@ import { prisma } from '@/lib/prisma'
 export class ForecastHydrologicalDataRepositoryImpl implements ForecastHydrologicalDataRepository {
   async getDefaultValues(stationId: string) {
     const forecastDataArray: ForecastHydrologicalData[] = []
-    const forecastDayRange = 15
-    const forecastDayLimit = 90
-
-    let dayCounter = forecastDayRange
-
+    const forecastDayRange = 30
     const today = new Date()
     const futureDate = new Date(today)
 
-    while (dayCounter <= forecastDayLimit) {
+    while (true) {
       futureDate.setDate(futureDate.getDate() + forecastDayRange)
       
       const dateString = futureDate.toISOString().split('T')[0]
@@ -41,10 +37,9 @@ export class ForecastHydrologicalDataRepositoryImpl implements ForecastHydrologi
         })
 
         forecastDataArray.push(lastForecastRegister!)
+        return forecastDataArray
       }
-      dayCounter += forecastDayRange
     }
-    return forecastDataArray
   }
 
   async create(data: Prisma.ForecastHydrologicalDataUncheckedCreateInput) {
