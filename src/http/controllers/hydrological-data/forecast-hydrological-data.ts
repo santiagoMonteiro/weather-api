@@ -24,7 +24,5 @@ export async function forecastHydrologicalDataController(
   const forecastHydrologicalData =
     await getForecastHydrologicalDataUseCase.execute({ stationId })
 
-  return reply.status(200).send([
-    ...forecastHydrologicalData,
-  ])
+  return reply.status(200).send(forecastHydrologicalData)
 }
